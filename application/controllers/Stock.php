@@ -37,12 +37,15 @@ class Stock extends CI_Controller {
     }
     public function index()
     {
-        $data['user'] = $this->Models->getID('m_user','username',$this->session->userdata('nama'));
+        $data['user'] = $this->Models->getID('user','username',$this->session->userdata('nama'));
+        $dataArray = array(
+            'id_shop' => $data['user'][0]->id_shop
+        );
         $data['warehouse'] = $this->Models->AllWarehouse();
-        $data['type'] = $this->Models->getAll('m_category');
-        $data['title'] = 'Warehouse';
+        $data['type'] = $this->Models->getAll('product');
+        $data['title'] = 'Stock';
         $this->load->view('dashboard/header',$data);
-        $this->load->view('Inventory/Stock/side',$data);
+        $this->load->view('dashboard/side',$data);
         $this->load->view('Inventory/Stock/main',$data);
         $this->load->view('dashboard/footer');
     }

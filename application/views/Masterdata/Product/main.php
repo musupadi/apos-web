@@ -1,8 +1,8 @@
 <section class="content-header">
-    <h1>Master Data</h1>
+    <h1>Inventory</h1>
     <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-newspaper-o"></i>Master Data</a></li>
-        <li class="active">Category</li>
+        <li><a href="#"><i class="fa fa-newspaper-o"></i>Inventory</a></li>
+        <li class="active">Product</li>
     </ol>
 </section>
 
@@ -12,31 +12,41 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Category</h3>
+                    <h3 class="box-title">Product</h3>
                 </div>
                 <!-- /.box-header -->
-                <a data-toggle="modal" data-target="#modal-success" class="btn btn-success btn-sm" style="width: 100px; margin-left: 10px"><i class="fa fa-fw fa-plus"></i>Add Category</a>
+                <a href="<?php echo base_url("Product/Add")?>" class="btn btn-success btn-sm" style="width: 100px; margin-left: 10px"><i class="fa fa-fw fa-plus"></i>Add Product</a>
                 <!-- /.box-header -->
                 <div class="box-body">
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th style="width: 10px;">#</th>
-                                <th>Category Name</th>
-                                <th>Unit Name</th>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Description</th>
+                                <th>Category</th>
+                                <th>Unit</th>
+                                <th>Stock</th>
                                 <th style="width: 40px;">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             $i = 1;
-                            foreach ($category as $data) {
+                            foreach ($product as $data) {
                             ?>
                                 <tr>
                                     <td><?= $i++ ?></td>
-                                    <td><?php echo $data->label ?></td>
-                                    <td><?php echo $data->unit ?></td>
-                                    <td style="text-align: center;">
+                                    <td style="height: 50px; vertical-align: middle;"><img class="profile-user-img img-responsive" src="<?php echo base_url()?>img/product/<?php echo $data->img?>" alt="Image Item"></td>
+                                    <td style="height: 50px; vertical-align: middle;"> <?php echo $data->label ?></td>
+                                    <td style="height: 50px; vertical-align: middle;"><?php echo number_format($data->price, 0, ',', '.') ?></td>
+                                    <td style="height: 50px; vertical-align: middle;"><?php echo $data->description ?></td>
+                                    <td style="height: 50px; vertical-align: middle;"><?php echo $data->category ?></td>
+                                    <td style="height: 50px; vertical-align: middle;"><?php echo $data->unit ?></td>
+                                    <td style="height: 50px; vertical-align: middle;"><?php echo $data->stock ?></td>
+                                    <td style="style=height: 50px; vertical-align: middle; text-align: center;">
                                         <a data-toggle="modal" data-target="#modal-info" onclick="edit('<?= $data->id ?>', '<?= $data->label ?>', '<?= $data->unit ?>')">
                                             <i class="fa fa-fw fa-pencil"></i>
                                         </a>
@@ -50,8 +60,13 @@
                         <tfoot>
                             <tr>
                                 <th style="width: 10px;">#</th>
-                                <th>Category Name</th>
-                                <th>Unit Name</th>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Description</th>
+                                <th>Category</th>
+                                <th>Unit</th>
+                                <th>Stock</th>
                                 <th style="width: 40px;">Action</th>
                             </tr>
                         </tfoot>
@@ -62,24 +77,34 @@
             </div>
             <!-- INPUT -->
             <div class="modal modal-success fade" id="modal-success">
-                <?php echo form_open_multipart('Product/Addcategory/') ?>
+                <?php echo form_open_multipart('Product/Add/') ?>
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">Input Category</h4>
+                            <h4 class="modal-title">Input Product</h4>
                         </div>
                         <div class="modal-body">
                             <div class="box-body">
                                 <div class="form-group">
-                                    <label for="text"><span style="color: red; margin-right: 3px">*</span>Category Name</label>
-                                    <input type="text" class="form-control" name="label" placeholder="Category Name" required>
+                                    <label for="text"><span style="color: red; margin-right: 3px">*</span>Product Name</label>
+                                    <input type="text" class="form-control" name="label" placeholder="Name" required>
+                                    <p class="text-red"><?php echo form_error('label') ?></p>
+                                </div>
+                                <div class="form-group">
+                                    <label for="text"><span style="color: red; margin-right: 3px">*</span>Price</label>
+                                    <input type="text" class="form-control" name="price" placeholder="Category Name" required onchange="formatRupiah(this)">
+                                    <p class="text-red"><?php echo form_error('label') ?></p>
+                                </div>
+                                <div class="form-group">
+                                    <label for="text"><span style="color: red; margin-right: 3px">*</span>Stock</label>
+                                    <input type="text" class="form-control" name="stock" placeholder="Stock" required onchange="formatRupiah(this)>
                                     <p class="text-red"><?php echo form_error('label') ?></p>
                                 </div>
                                 <div class="form-group">
                                     <label for="text"><span style="color: red; margin-right: 3px">*</span>Category Unit</label>
-                                    <input type="text" class="form-control" name="unit" placeholder="Category Unit" required>
+                                    <input type="text multiline" class="form-control" name="description" placeholder="Category Unit" required>
                                     <p class="text-red"><?php echo form_error('unit') ?></p>
                                 </div>
                             </div>

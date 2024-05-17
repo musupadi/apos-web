@@ -32,7 +32,7 @@ class Login extends CI_Controller {
                 'username' => $username,
                 'password' => MD5($password)
             );
-            $cek = $this->Models->data_login("m_user",$where)->row_array();
+            $cek = $this->Models->data_login("user",$where)->row_array();
             if($cek >0){
                 $data_session = array(
                     'nama' => $username,

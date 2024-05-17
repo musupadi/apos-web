@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Transaction extends CI_Controller {
+class History extends CI_Controller {
 
     public function __construct(){
         parent::__construct();
@@ -42,7 +42,7 @@ class Transaction extends CI_Controller {
         );
         $data['category'] = $this->Models->getWhere2("category",$where);
         $data['product'] = $this->Models->Product($data['user'][0]->id_shop);
-        $data['title'] = 'Transaction';
+        $data['title'] = 'History';
         $this->load->view('dashboard/header',$data);
         $this->load->view('dashboard/side',$data);
         $this->load->view('Masterdata/Product/main',$data);

@@ -4,7 +4,7 @@
     <div class="pull-right hidden-xs">
       <b>Version</b> 1
     </div>
-    <strong>Copyright &copy; 2024 <a href="<?php base_url() ?>">Podomoro University</a>.</strong> All rights
+    <strong>Copyright &copy; 2024 <a href="<?php base_url() ?>">Ascendant POS</a>.</strong> All rights
     reserved.
   </footer>
 
@@ -294,7 +294,45 @@ $(document).ready(function() {
       'autoWidth'   : false
     })
   })
-  
+  function formatRupiah(input) {
+        // Tangkap nilai input harga
+      
+
+        // var formattedValue = input.replace(/[^\d.]/g, '');
+        
+        // // Mengonversi nilai ke dalam tipe data float
+        // var floatValue = parseFloat(formattedValue);
+        
+        // // Mengatur nilai input dengan nilai yang sudah diformat
+        // input.value = floatValue;
+        
+        let harga = input.value;
+
+        harga = harga.replace(/[.,]/g, '');
+        
+        // Ubah format menjadi Rupiah
+        let hargaFormatted = parseInt(harga).toLocaleString('id-ID');
+        
+
+        // Setel kembali nilai input dengan format Rupiah
+        input.value = hargaFormatted;
+    }
+    function displayImageAndName(input) {
+        var reader = new FileReader();
+        
+        reader.onload = function(e) {
+            var imgElement = document.getElementById('image-preview');
+            imgElement.src = e.target.result;
+            
+            var imageContainer = document.getElementById('image-container');
+            imageContainer.style.display = 'block';
+        }
+        
+        reader.readAsDataURL(input.files[0]);
+        
+        var fileNameElement = document.getElementById('file-name');
+        fileNameElement.innerText = input.files[0].name;
+    }
 </script>
 
 

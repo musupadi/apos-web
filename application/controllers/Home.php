@@ -38,15 +38,8 @@ class Home extends CI_Controller {
 
     public function index()
     {
-        // $data['barang'] = $this->Models->getMyProduct($this->session->userdata('nama'));
-        $data['user'] = $this->Models->getID('m_user','username',$this->session->userdata('nama'));
-        // $data['count_wallet'] = $this->Models->Count('wallet','status','Belum Diverifikasi');
+        $data['user'] = $this->Models->getID('user','username',$this->session->userdata('nama'));
         $data['title'] = 'Dashboard';
-        $data['item'] = $this->Models->itemOneMonth();
-        $data['transactionInOut'] = $this->Models->transactionInOut();
-        $data['transactionIn'] = $this->Models->transactionIn();
-        $data['transactionOut'] = $this->Models->transactionOut();
-        $data['announcement'] = $this->Models->allAnnouncement();
         $this->load->view('dashboard/header',$data);
         $this->load->view('dashboard/side',$data);
         $this->load->view('dashboard/main',$data);

@@ -41,6 +41,18 @@ class Models extends CI_Model {
         return $this->db->query($query)->result();
     }
 
+    public function Product($id_shop){
+        $this->db->select('a.id,a.img,a.label,a.price,a.stock,a.description,b.label as category,c.label as shop_name,b.unit');
+        $this->db->from('product as a');
+        $this->db->join('category as b','a.id_category = b.id','left');
+        $this->db->join('shop as c','a.id_shop = c.id','left');
+        if($id_shop!=null){
+            $this->db->where('a.id_shop = '.$id_shop);
+        }
+        $this->db->order_by('id', 'desc');
+        $data = $this->db->get()->result();
+        return $data;
+    }
     public function itemOneMonth() {
         // Define start and end dates for one month time limit
         $startDate = date('Y-m-01'); // First day of current month
@@ -114,12 +126,16 @@ class Models extends CI_Model {
         
         return $result;
     }
+
+   
     
-    public function AllUser(){
-        $this->db->select('a.id,a.name,a.username,a.email,b.label,a.photo,');
-        $this->db->from('m_user as a');
+    public function AllUser($id_shop){
+        $this->db->select('a.id,a.name,a.username,a.email,b.label,a.photo,a.id_shop,c.label as ShopName');
+        $this->db->from('user as a');
+        $this->db->join('role as b','a.id_role = b.id','left');
+        $this->db->join('shop as c','a.id_shop = c.id','left');
+        $this->db->where('a.id_shop = '.$id_shop);
         $this->db->order_by('id', 'desc');
-        $this->db->join('m_role as b','a.id_role = b.id','left');
         $data = $this->db->get()->result();
         return $data;
     }
@@ -495,10 +511,7 @@ class Models extends CI_Model {
     function getWhere2($table,$where){
         return $this->db->get_where($table,$where)->result();
     }
-    public function getAllProduct($id){
-        $query = "SELECT a.username,a.nama,a.email,b.nama_barang,b.harga,b.quantity,b.gambar,b.deskripsi,b.id FROM user a JOIN barang b ON a.username=b.id_penjual EXCEPT SELECT a.username,a.nama,a.email,b.nama_barang,b.harga,b.quantity,b.gambar,b.deskripsi,b.id FROM user a JOIN barang b ON a.username=b.id_penjual WHERE a.username='$id'";
-        return $this->db->query($query)->result();
-    }
+   
     public function getMyProduct($id){
         $query = "SELECT a.username,a.nama,a.email,b.nama_barang,b.harga,b.quantity,b.gambar,b.deskripsi,b.id FROM user a JOIN barang b ON a.username=b.id_penjual WHERE a.username='$id'";
         return $this->db->query($query)->result();
